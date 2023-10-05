@@ -51,7 +51,6 @@ void Graph::read(const std::string& file_path) {
     if (file.is_open()) {
         while (getline(file, line)) {
             //cout << line << endl;
-
             vector<int> v;
             string elem;
             stringstream line_stream(line);
