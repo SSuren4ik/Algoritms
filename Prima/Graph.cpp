@@ -1,77 +1,80 @@
 #include "Graph.h"
 
-Graph::Graph() : size(0)
+Graph::Graph()
 {
-    adjList.clear();
+    size = 0;
+    arr.clear();
     node_count = 0;
 }
-
-Graph::Graph(const std::vector<Edge>& edges) : size(0), node_count(0) 
-{
-    adjList.clear();
-    node_count = 0;
-    for (auto& edge : edges)
-        AddEdge(edge);
-}
-
 void Graph::print() 
 {
-    for (int i = 0; i <= node_count; i++) {
+    Link* tmp;
+    for (int i = 0; i < node_count; i++) {
         cout << i << " <——> ";
-        for (Pair v : adjList[i]) {
-            cout << "(" << v.first << ", w = " << v.second << ") ";
+        tmp = arr[i]->gethead()->next;
+        while (tmp!=nullptr) 
+        {
+            cout << '(' << tmp->src << ", w = " << tmp->weight << ") ";
+            tmp = tmp->next;
         }
         cout << endl;
     }
 }
 
-void Graph::AddEdge(const Edge& edge)
+void Graph::read(const string& file_path)
 {
-    int max_src = max(edge.start_ver, edge.start_ver);
-    node_count = max(node_count, max_src);
-    if (max_src > size|| size==0) {
-        adjList.resize(size + 5);
-        size += 5;
-    }
-    adjList[edge.start_ver].emplace_back(edge.end_ver, edge.weight);
-}
-
-vector<vector<Pair>> Graph::getList() const {
-    return adjList;
-}
-
-int Graph::get_node_count() const {
-    return node_count + 1;
-}
-
-void Graph::read(const std::string& file_path) {
     ifstream file;
     file.open(file_path);
+    arr.clear();
+    size = 2 * size + 5;
+    arr.resize(size);
+    for (int i = 0; i < size; ++i)
+    {
+        arr[i] = new List(i);
+    }
+
+    node_count = 0;
     string line;
     if (file.is_open()) {
-        while (getline(file, line)) {
-            //cout << line << endl;
-            vector<int> v;
+        for (int i = 0; getline(file, line);i++) {
+            cout << line << endl;
             string elem;
             stringstream line_stream(line);
-            while (getline(line_stream, elem, ' ')) {
-                v.push_back(stoi(elem));
+            for (int k = 0; getline(line_stream, elem, ' ');k++)
+            {
+                int ch = stoi(elem);
+                if (ch != 0)
+                {
+                    arr[i]->last_add(k, ch);
+                }
             }
-            AddEdge(Edge(v[0], v[1], v[2]));
+            //arr[i]->print();
+            ++node_count;
         }
     }
 }
 
-void Graph::save(const std::string& file_path) {
+void Graph::save(const string& file_path)
+{
     ofstream file;
+    Link* tmp;
     file.open(file_path);
-    if (file.is_open()) {
-        for (int i = 0; i <= node_count; i++) {
-            file << i << " <——> ";
-            for (Pair v : adjList[i]) {
-                file << "(" << v.first << ", w = " << v.second << ") ";
+    if (file.is_open())
+    {
+        for (int i = 0; i < node_count; ++i)
+        {
+            tmp = arr[i]->gethead();
+            file << tmp->src << " <——> ";
+            while (tmp!=nullptr)
+            {
+                if(tmp->weight!=0)
+                {
+                    file << '(' << tmp->src << ',' << "w = " << tmp->weight << ')' << ' ';
+                }
+                tmp = tmp->next;
             }
-            file << std::endl;
+            file << endl;
         }
     }
+    tmp = NULL;
 }

@@ -1,34 +1,55 @@
 #include "List.h"
-#include "Iterator.h"
 List::List() {
-    head = new Link();
-    head->next = head;
+    start = new Link();
+    end = start;
 }
+
+List::List(int k=0)
+{
+    start = new Link(k);
+    end = start;
+}
+
 List::List(List& l)
 {
-    Link* tmp = l.head->next;
-    while (l.head != l.head->next)
+    start = new Link(0,0, end);
+    end = start;
+    Link* tmp = l.start->next;
+    while (tmp != nullptr)
     {
-        add(tmp->src, tmp->weight);
+        last_add(tmp->src,tmp->weight);
         tmp = tmp->next;
     }
 }
+
 List& List:: operator= (const List& l)
 {
     this->clear();
-    Link* tmp = l.head->next;
-    while (tmp != l.head)
+    Link* tmp = l.start->next;
+    while (tmp != l.start)
     {
         add(tmp->src, tmp->weight);
         tmp = tmp->next;
     }
     return *this;
 }
+
+void List::del_first()
+{
+    if (IsEmpty())
+        throw exception();
+    Link* p = start;
+    start = p->next;
+    delete p;
+    if (IsEmpty())
+        end = nullptr;
+}
+
 void List::add(int _src, int _w)
 {
-    Link* t = head->next;
+    Link* t = start->next;
     Link* tmp = new Link(_src, _w);
-    while (t->next != head) {
+    while (t->next != start) {
         if (t->next->weight > _w) {
             tmp->next = t->next;
             t->next = tmp;
@@ -37,55 +58,42 @@ void List::add(int _src, int _w)
         t = t->next;
     }
     t->next = tmp;
-    tmp->next = head;
-}
-void List::clear()
-{
-    Link* tmp = head->next;
-    Link* tmp1 = tmp->next;
-    while (tmp != head)
-    {
-        delete tmp;
-        tmp = tmp1;
-        tmp1 = tmp->next;
-    }
-}
-void List::read(string& file_path) {
-    ifstream file;
-    file.open(file_path);
-    string line;
-    if (file.is_open()) {
-        Iterator iter(head->next);
-        for (int i = 0; getline(file, line);++i)
-        {
-            //cout << line << endl;
-            string elem;
-            stringstream line_stream(line);
-            while (getline(line_stream, elem, ' '))
-            {
-                if (stoi(elem) != 0)
-                {
-                }
-                //v.push_back(stoi(elem));
-            }
-           // AddEdge(Edge(v[0], v[1], v[2]));
-        }
-    }
+    tmp->next = start;
 }
 
-void List::save(string& file_path) {
-    //ofstream file;
-    //file.open(file_path);
-    //if (file.is_open()) {
-    //    for (int i = 0; i <= node_count; i++) {
-    //        file << i << " <——> ";
-    //        for (Pair v : adjList[i]) {
-    //            file << "(" << v.first << ", w = " << v.second << ") ";
-    //        }
-    //        file << std::endl;
-    //    }
-    //}
+Link* List::gethead()
+{
+    return start;
 }
+
+void List::print()
+{
+    Link* tmp = start->next;
+    while (tmp != nullptr)
+    {
+        cout << tmp->src << " w = " << tmp->weight << " ";
+        tmp = tmp->next;
+    }
+    cout << endl;
+}
+
+void List::last_add(int _src, int _w)
+{
+    end->next = new Link(_src, _w);
+    end = end->next;
+}
+
+bool List::IsEmpty()
+{
+    return start == end;
+}
+
+void List::clear()
+{
+    while (!IsEmpty())
+        del_first();
+}
+
 List::~List()
 {
     clear();
