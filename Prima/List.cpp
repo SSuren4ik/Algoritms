@@ -47,9 +47,9 @@ void List::del_first()
 
 void List::add(int _src, int _w)
 {
-    Link* t = start->next;
+    Link* t = start;
     Link* tmp = new Link(_src, _w);
-    while (t->next != start) {
+    while (t->next!=nullptr) {
         if (t->next->weight > _w) {
             tmp->next = t->next;
             t->next = tmp;
@@ -58,7 +58,7 @@ void List::add(int _src, int _w)
         t = t->next;
     }
     t->next = tmp;
-    tmp->next = start;
+    end = t->next;
 }
 
 Link* List::gethead()

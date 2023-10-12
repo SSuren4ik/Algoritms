@@ -6,6 +6,21 @@ Graph::Graph()
     arr.clear();
     node_count = 0;
 }
+Graph::Graph(int s = 0)
+{
+    size = s;
+    node_count = s;
+    arr.clear();
+    arr.resize(size);
+    for (int i = 0; i < size; ++i)
+    {
+        arr[i] = new List(i);
+    }
+}
+int Graph::get_node_count() const
+{
+    return node_count;
+}
 void Graph::print() 
 {
     Link* tmp;
@@ -37,7 +52,7 @@ void Graph::read(const string& file_path)
     string line;
     if (file.is_open()) {
         for (int i = 0; getline(file, line);i++) {
-            cout << line << endl;
+            //cout << line << endl;
             string elem;
             stringstream line_stream(line);
             for (int k = 0; getline(line_stream, elem, ' ');k++)
@@ -45,7 +60,7 @@ void Graph::read(const string& file_path)
                 int ch = stoi(elem);
                 if (ch != 0)
                 {
-                    arr[i]->last_add(k, ch);
+                    arr[i]->add(k, ch);
                 }
             }
             //arr[i]->print();
@@ -77,4 +92,14 @@ void Graph::save(const string& file_path)
         }
     }
     tmp = NULL;
+}
+
+vector<List*> Graph::get_List()
+{
+    return arr;
+}
+
+void Graph::add_edge(int src, int end, int _w)
+{
+    arr[src]->last_add(end, _w);
 }
