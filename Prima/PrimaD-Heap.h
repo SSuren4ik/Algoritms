@@ -1,17 +1,19 @@
 #pragma once
 #include "Graph.h"
+#include "D-Heap.h"
 
 using namespace std;
 
-class PrimaArray
+class PrimaDHeap
 {
 private:
 	int n;
+	DHeap* dh;
 	int* a;
 	int* b;
 	bool* vt;
 public:
-	PrimaArray(const Graph& graph);
+	PrimaDHeap(const Graph& graph);
 	Graph* execute(Graph& graph);
-	~PrimaArray();
+	~PrimaDHeap();
 };

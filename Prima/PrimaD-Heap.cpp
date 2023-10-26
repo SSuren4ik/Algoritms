@@ -1,17 +1,18 @@
-#include "PrimaArray.h"
+#include "PrimaD-Heap.h"
 using namespace std;
 
-PrimaArray::PrimaArray(const Graph& graph)
+PrimaDHeap::PrimaDHeap(const Graph& graph)
 {
 	n = graph.get_node_count();
+	dh = new DHeap();
 	a = new int[n];
 	b = new int[n];
 	vt = new bool[n];
 }
-Graph* PrimaArray::execute(Graph& graph)
+Graph* PrimaDHeap::execute(Graph& graph)
 {
 	int mt = 0;
-	Graph* graph1=new Graph(graph.get_node_count());
+	Graph* graph1 = new Graph(graph.get_node_count());
 	int q;
 	for (int i = 0; i < n; ++i)
 	{
@@ -19,28 +20,23 @@ Graph* PrimaArray::execute(Graph& graph)
 	}
 	int u = 0;
 	vt[u] = 1;
-	Link* tmp=graph.get_List()[0]->gethead()->next;
-	while(tmp!=nullptr)
+	Link* tmp = graph.get_List()[0]->gethead()->next;
+	while (tmp != nullptr)
 	{
 		a[tmp->src] = tmp->weight;
 		b[tmp->src] = u;
+		dh->insert(Pair(tmp->src, tmp->weight));
 		tmp = tmp->next;
 	}
-	while (mt < n -1)
+	while (mt < n - 1)
 	{
-		int min = INT_MAX;
-		for (int i = 0; i < n; ++i)
+		Pair p;
+		do
 		{
-			if (vt[i] == 0 && a[i]>0 && min > a[i])
-			{
-				min = a[i];
-				u = i;
-			}
-		}
-		if (a[u] < 0 || min==INT_MAX)
-		{
-			throw exception("Граф несвязный");
-		}
+			p = dh->getMin();
+			dh->removeMin();
+		} while (vt[p.first] != 0);
+		u = p.first;
 		q = b[u];
 		vt[u] = 1;
 		++mt;
@@ -50,21 +46,20 @@ Graph* PrimaArray::execute(Graph& graph)
 		{
 			if (vt[tmp->src] == 0 && a[tmp->src] > tmp->weight)
 			{
+				dh->insert(Pair(tmp->src, tmp->weight));
 				a[tmp->src] = tmp->weight;
 				b[tmp->src] = u;
 			}
 			tmp = tmp->next;
 		}
 	}
-
 	delete tmp;
-
 	return graph1;
 }
-
-PrimaArray::~PrimaArray()
+PrimaDHeap::~PrimaDHeap()
 {
-	delete[]a;
-	delete[]b;
-	delete[]vt;
+	delete dh;
+	delete[] a;
+	delete[] b;
+	delete[] vt;
 }

@@ -6,8 +6,6 @@
 #include <string>
 #include <sstream>
 
-#ifndef GRAPH_H
-#define GRAPH_H
 #include "List.h"
 
 using namespace std;
@@ -25,7 +23,6 @@ public:
     void save(const string& file_path);
     int get_node_count() const;
     vector<List*> get_List();
-    void add_edge(int src, int end, int w);
+    void add_edge(int src, int end, int w);   
+    ~Graph();
 };
-
-#endif 

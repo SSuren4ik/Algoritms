@@ -10,17 +10,17 @@ Graph::Graph(int s = 0)
 {
     size = s;
     node_count = s;
-    arr.clear();
-    arr.resize(size);
     for (int i = 0; i < size; ++i)
     {
-        arr[i] = new List(i);
+        arr.push_back(new List(i));
     }
 }
+
 int Graph::get_node_count() const
 {
     return node_count;
 }
+
 void Graph::print() 
 {
     Link* tmp;
@@ -41,18 +41,28 @@ void Graph::read(const string& file_path)
     ifstream file;
     file.open(file_path);
     arr.clear();
-    size = 2 * size + 5;
-    arr.resize(size);
+    size = 10;
+    arr.reserve(size);
     for (int i = 0; i < size; ++i)
     {
-        arr[i] = new List(i);
+        arr.push_back(new List(i));
     }
 
     node_count = 0;
     string line;
     if (file.is_open()) {
-        for (int i = 0; getline(file, line);i++) {
-            //cout << line << endl;
+        for (int i = 0; getline(file, line);i++)
+        {
+            if (size <= i)
+            {
+                int nsize = 2 * size + 5;
+                arr.reserve(nsize);
+                for (int m = size; m < nsize; ++m)
+                {
+                    arr.push_back(new List(m));
+                }
+                size = nsize;
+            }
             string elem;
             stringstream line_stream(line);
             for (int k = 0; getline(line_stream, elem, ' ');k++)
@@ -60,9 +70,10 @@ void Graph::read(const string& file_path)
                 int ch = stoi(elem);
                 if (ch != 0)
                 {
-                    arr[i]->add(k, ch);
+                    arr[i]->last_add(k, ch);
                 }
             }
+            //cout << i << endl;
             //arr[i]->print();
             ++node_count;
         }
@@ -73,6 +84,7 @@ void Graph::save(const string& file_path)
 {
     ofstream file;
     Link* tmp;
+    int sum = 0;
     file.open(file_path);
     if (file.is_open())
     {
@@ -84,12 +96,14 @@ void Graph::save(const string& file_path)
             {
                 if(tmp->weight!=0)
                 {
+                    sum += tmp->weight;
                     file << '(' << tmp->src << ',' << "w = " << tmp->weight << ')' << ' ';
                 }
                 tmp = tmp->next;
             }
             file << endl;
         }
+        file << "Вес графа = " << sum << endl;
     }
     tmp = NULL;
 }
@@ -102,4 +116,9 @@ vector<List*> Graph::get_List()
 void Graph::add_edge(int src, int end, int _w)
 {
     arr[src]->last_add(end, _w);
+}
+
+Graph::~Graph()
+{
+    arr.clear();
 }

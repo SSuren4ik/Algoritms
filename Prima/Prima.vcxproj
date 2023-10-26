@@ -127,22 +127,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="D-Heap.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="List.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="PrimaArray.cpp" />
+    <ClCompile Include="PrimaD-Heap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="D-Heap.h" />
+    <ClInclude Include="GeneratorofMatrix.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="Link.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="PrimaArray.h" />
+    <ClInclude Include="PrimaD-Heap.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />
-    <Text Include="output.txt" />
     <Text Include="outputArrayPrima.txt" />
+    <Text Include="outputDHeapPrima.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
