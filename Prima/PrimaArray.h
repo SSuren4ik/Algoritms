@@ -3,15 +3,16 @@
 
 using namespace std;
 
+typedef pair<int, int> Pair;
+
 class PrimaArray
 {
 private:
 	int n;
-	int* a;
-	int* b;
-	bool* vt;
+	vector<int> a;
+	vector<int> b;
+	vector<bool> vt;
 public:
-	PrimaArray(const Graph& graph);
 	Graph* execute(Graph& graph);
 	~PrimaArray();
 };

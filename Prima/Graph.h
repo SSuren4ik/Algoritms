@@ -5,10 +5,8 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-
 #include "List.h"
-
-using namespace std;
+const int n = 4001;
 
 class Graph 
 {

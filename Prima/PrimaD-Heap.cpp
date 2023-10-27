@@ -1,16 +1,18 @@
 #include "PrimaD-Heap.h"
 using namespace std;
 
-PrimaDHeap::PrimaDHeap(const Graph& graph)
-{
-	n = graph.get_node_count();
-	dh = new DHeap();
-	a = new int[n];
-	b = new int[n];
-	vt = new bool[n];
-}
 Graph* PrimaDHeap::execute(Graph& graph)
 {
+	a.clear();
+	b.clear();
+	vt.clear();
+	if (dh != nullptr)
+		delete dh;
+	n = graph.get_node_count();
+	dh = new DHeap();
+	a.resize(n);
+	b.resize(n);
+	vt.resize(n);
 	int mt = 0;
 	Graph* graph1 = new Graph(graph.get_node_count());
 	int q;
@@ -59,7 +61,7 @@ Graph* PrimaDHeap::execute(Graph& graph)
 PrimaDHeap::~PrimaDHeap()
 {
 	delete dh;
-	delete[] a;
-	delete[] b;
-	delete[] vt;
+	a.clear();
+	b.clear();
+	vt.clear();
 }

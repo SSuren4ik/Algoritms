@@ -1,15 +1,12 @@
 #include "PrimaArray.h"
 using namespace std;
 
-PrimaArray::PrimaArray(const Graph& graph)
-{
-	n = graph.get_node_count();
-	a = new int[n];
-	b = new int[n];
-	vt = new bool[n];
-}
 Graph* PrimaArray::execute(Graph& graph)
 {
+	n = graph.get_node_count();
+	a.resize(n);
+	b.resize(n);
+	vt.resize(n);
 	int mt = 0;
 	Graph* graph1=new Graph(graph.get_node_count());
 	int q;
@@ -64,7 +61,7 @@ Graph* PrimaArray::execute(Graph& graph)
 
 PrimaArray::~PrimaArray()
 {
-	delete[]a;
-	delete[]b;
-	delete[]vt;
+	a.clear();
+	b.clear();
+	vt.clear();
 }
