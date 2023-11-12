@@ -24,15 +24,19 @@ int Graph::get_node_count() const
 void Graph::print() 
 {
     Link* tmp;
-    for (int i = 0; i < node_count; i++) {
-        cout << i << " <——> ";
-        tmp = arr[i]->gethead()->next;
-        while (tmp!=nullptr) 
+    for (int i = 0; i < node_count; i++) 
+    {
+        if (!arr[i]->IsEmpty())
         {
-            cout << '(' << tmp->src << ", w = " << tmp->weight << ") ";
-            tmp = tmp->next;
+            cout << i << " <——> ";
+            tmp = arr[i]->gethead()->next;
+            while (tmp!=nullptr) 
+            {
+                cout << '(' << tmp->src << ", w = " << tmp->weight << ") ";
+                tmp = tmp->next;
+            }
+            cout << endl;
         }
-        cout << endl;
     }
 }
 
@@ -120,5 +124,7 @@ void Graph::add_edge(int src, int end, int _w)
 
 Graph::~Graph()
 {
+    for (int i = 0; i < arr.size(); ++i)
+        delete arr[i];
     arr.clear();
 }

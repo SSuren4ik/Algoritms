@@ -68,4 +68,27 @@
       <Filter>Файлы ресурсов</Filter>
     </Text>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="results">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+    <None Include="results4 n^2">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+    <None Include="results1 n^2">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+    <None Include="results1 n^2 10">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+    <None Include="results2 100">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+    <None Include="results2 1000">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+    <None Include="results3">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+  </ItemGroup>
 </Project>

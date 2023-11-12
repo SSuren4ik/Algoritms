@@ -7,65 +7,51 @@
 #include <time.h>
 #include <stdlib.h>
 #include "GeneratorofMatrix.h"
+#include <cmath>
+#include <math.h>
 
 using namespace std;
 
-//int main()
-//{
-//	srand(time(NULL));
-//	vector<vector<int>> arr = Generator(rand()%3+10);
-//	WriteMatrixtoFile("input.txt", arr);
-//
-//	setlocale(LC_ALL, "Russian");
-//
-//	Graph graph;
-//	graph.read("input.txt");
-//	PrimaArray pra(graph);
-//	PrimaDHeap prd(graph);
-//	pra.execute(graph)->save("outputArrayPrima.txt");
-//	prd.execute(graph)->save("outputDHeapPrima.txt");
-//
-// 	return 0;
-//}
 int main() 
 {
-    const int N_MAX = 4000 + 1;
-    const int STEP = 100;
+    setlocale(LC_ALL, "Russian");
+    const int N_MAX = 10000 + 1;
     const int Q = 1;
     const int R = 1000000;
-    double result[200][2];
-
-    PrimaArray primaArray;
-    //PrimaDHeap primaDheap;
-
-    for (int r = 1; r < 201; ++r)
+    double result[99][2];
+    int i = 0;
+    
+    for (int m=0; m <10000000+1; m+=100000)
     {
-        int n = N_MAX; 
-        int m = 1000 * n;
-        Graph g = generate_random_graph(n, m, r, Q);
+
+        Graph g = generate_random_graph(N_MAX, m, R, Q);
         clock_t tStart = clock();
 
+        PrimaArray primaArray;
         primaArray.execute(g);
-
         double end_time = (double)(clock() - tStart) / CLOCKS_PER_SEC;
-        result[r - 1][0] = end_time;
-        printf("n = %d, m = %d\n", n, m);
+        result[i][0] = end_time;
+        printf("n = %d, m = %d\n",N_MAX, m);
         printf("Time primaArray taken: %.2fs\n", end_time);
         printf("----------------\n");
 
-        //tStart = clock();
+        tStart = clock();
 
-        //primaDheap.execute(g);
+        PrimaDHeap primaDheap;
+        primaDheap.execute(g);
 
         //end_time = (double)(clock() - tStart) / CLOCKS_PER_SEC;
-        //result[r - 1][1] = end_time;
-        //printf("n = %d, m = %d, r = %d\n", n, m, r);
-        //printf("Time primaDheap taken: %.2fs\n", end_time);
-        //printf("----------------\n");
+        //result[i][1] = end_time;
+        end_time = sqrt(result[i][0]) * log10(result[i][0]);
+        result[i][1] = end_time;
+        printf("n = %d, m = %d\n", N_MAX, m);
+        printf("Time primaDheap taken: %.2fs\n", end_time);
+        printf("----------------\n");
+        i++;
     }
 
     std::ofstream file;
-    file.open("results");
+    file.open("results3");
     if (file.is_open())
         for (auto& i : result)
             file << i[0] << " " << i[1] << std::endl;

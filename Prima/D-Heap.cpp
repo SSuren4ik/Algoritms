@@ -15,13 +15,13 @@ void DHeap::insert(Pair value)
         {
             swap(heap[currentIndex], heap[father(currentIndex)]);
         }
-        else if (heap[father(currentIndex)].second == heap[currentIndex].second)
-        {
-            if(heap[father(currentIndex)].first > heap[currentIndex].first)
-            {
-                swap(heap[currentIndex], heap[father(currentIndex)]);
-            }
-        }
+        //else if (heap[father(currentIndex)].second == heap[currentIndex].second)
+        //{
+        //    if(heap[father(currentIndex)].first > heap[currentIndex].first)
+        //    {
+        //        swap(heap[currentIndex], heap[father(currentIndex)]);
+        //    }
+        //}
         currentIndex = father(currentIndex);
     }
     n = heap.size() - 1;
@@ -65,6 +65,10 @@ int DHeap::getMinChildIndex(int index)
 
     return maxChild;
 }
+bool DHeap::isEmpty()
+{
+    return heap.empty();
+}
 
 void DHeap::removeMin() 
 {
@@ -78,11 +82,12 @@ void DHeap::removeMin()
     n = heap.size() - 1;
     heapifyDown(0);
 }
+
 Pair DHeap::getMin()
 {
     if (heap.empty())
     {
-        return Pair(-1,-1);
+        throw exception("Куча пуста");
     }
     return heap[0];
 }
@@ -121,6 +126,10 @@ void DHeap::printHeapSrc()
         cout << heap[i].first << " ";
     }
     cout << endl;
+}
+int DHeap::getsize()
+{
+    return heap.size()-1;
 }
 
 DHeap::~DHeap()

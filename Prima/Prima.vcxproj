@@ -148,6 +148,15 @@
     <Text Include="outputArrayPrima.txt" />
     <Text Include="outputDHeapPrima.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="results" />
+    <None Include="results1 n^2" />
+    <None Include="results1 n^2 10" />
+    <None Include="results2 100" />
+    <None Include="results2 1000" />
+    <None Include="results3" />
+    <None Include="results4 n^2" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

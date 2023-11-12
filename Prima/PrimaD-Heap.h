@@ -11,6 +11,6 @@ private:
 	vector<int> b;
 	vector<bool> vt;
 public:
-	Graph* execute(Graph& graph);
+	int execute(Graph& graph);
 	~PrimaDHeap();
 };

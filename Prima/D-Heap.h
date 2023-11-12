@@ -21,10 +21,11 @@ public:
     int father(int i);
     void removeMin();
     Pair getMin();
-    void heapifyUp(int index);
+    bool isEmpty();
     void heapifyDown(int index);
     int getMinChildIndex(int index);
     void printHeap();
     void printHeapSrc();
+    int getsize();
     ~DHeap();
 };

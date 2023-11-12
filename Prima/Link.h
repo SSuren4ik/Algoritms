@@ -9,8 +9,4 @@ struct Link {
         weight = _w;
         next = _n;
     }
-    ~Link()
-    {
-        ;
-    }
 };
